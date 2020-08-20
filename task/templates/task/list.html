@@ -1,8 +1,42 @@
-<form action="">
-    {{form.title}}
-    <input type="submit" value="Submit">
-</form>
-{% for i in task %}
+<!DOCTYPE html>
+<html lang="en">
 
-<p>{{i}}</p>
-{% endfor%}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+        .test {
+            margin: 40px;
+        }
+
+        .btn-info {
+            background-color: rgb(243, 226, 74);
+            border: none;
+            color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <form method="POST" action="/">
+        {% csrf_token %}
+        <div>{{form.title}}</div>
+        <input class="btn btn-success" type="submit" value="Submit">
+    </form>
+    {% for task in tasks %}
+    <div class="test">
+        <a class="btn btn-sm btn-info" href="{% url 'update_task' task.id%}">Update</a>
+        <a class="btn btn-sm btn-danger" href="{% url 'delete_task' task.id%}">Delete</a>
+        {% if task.complete == True %}
+        <strike> {{task}} </strike>
+        {% else %}
+        <p>{{task}}</p>
+        {% endif %}
+    </div>
+    {% endfor%}
+</body>
+
+</html>
